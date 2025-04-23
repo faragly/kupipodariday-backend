@@ -15,7 +15,7 @@ import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local.guard';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(
     private usersService: UsersService,
@@ -30,11 +30,7 @@ export class AuthController {
 
   @Post('signup')
   @UseInterceptors(SensitiveDataInterceptor)
-  async signup(@Body() createUserDto: CreateUserDto) {
-    try {
-      return await this.usersService.create(createUserDto);
-    } catch {
-      throw new InternalServerErrorException('Не удалось создать пользователя');
-    }
+  signup(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 }
